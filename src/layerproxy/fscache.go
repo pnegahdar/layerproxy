@@ -91,10 +91,13 @@ func (fs *FsCache) Delete(key string) error {
 }
 
 func NewFSCache() *FsCache {
+	var homedir string
 	user, err := user.Current()
 	if err != nil {
-		panic(err)
+		homedir = ""
+	} else {
+		homedir = user.HomeDir
 	}
 	dirAddon := "/.memprox/"
-	return &FsCache{RootDir: user.HomeDir + dirAddon}
+	return &FsCache{RootDir: homedir + dirAddon}
 }
